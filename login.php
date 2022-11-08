@@ -1,22 +1,23 @@
 <?php
-	session_start();
-	require "config.php";
-	if(isset($_POST['submit'])){
-		$user = $_POST['user'];
-		$pass = $_POST['pass'];
-		$query = mysqli_query($conn,"SELECT * FROM tb_admin WHERE username='$user'");
-		$result = mysqli_fetch_assoc($query);
-		$username = $result['username'];
-		if(password_verify($pass,$result['password'])){
-			$_SESSION['status_login'] = true; 
-			echo '<script>window.location="index.php"</script>';
-		} else {
-			echo "<script>
-				alert('Username dan Password salah');
-			</script>";
-		}
+    session_start();
+    require 'config.php';
+    if(isset($_POST['submit'])){
+        $user = $_POST['user'];
+        $pass = $_POST['pass'];
+        $hasil = mysqli_query($conn, "SELECT username, password FROM tb_admin WHERE username = '$user'");
+        if(mysqli_num_rows($hasil)== 1){
+          $row = mysqli_fetch_assoc($hasil);
+          if(password_verify($pass, $row['password'])){
+            $_SESSION['status_login'] = $row;
 
-	}
+            header("Location: index.php");
+          }else{
+            $error_pass = true;
+          }
+        }else{
+            $error_username= true;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,9 @@
         <p>Don't have an account yet?
                 <a href="register.php">Register</a>
         </p>
+		<br>
+		<?php if (isset($error_pass)) {echo "<h2><a>Your Password is Wrong!</a></h2>";} ?>
+    	<?php if (isset($error_username)) {echo "<h2><a>Account Not Found!</a></h2>";} ?>
 	</div>
 </body>
 </html>

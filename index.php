@@ -4,6 +4,8 @@
 	if($_SESSION['status_login'] != true){
 		echo '<script>window.location="login.php"</script>';
 	}
+    $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM tb_admin WHERE admin_id = 1");
+	$a = mysqli_fetch_object($kontak);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +64,7 @@
             while($k = mysqli_fetch_array($kategori)){
     ?>
         <a href="product.php?kat=<?php echo $k['category_id'] ?>" class="box">
-            <img src="images/category-2.png" alt = "">
+            <img src="images/category-1.png" alt = "">
             <p><?php echo $k['category_name'] ?></p>
         </a>
     </a>
@@ -70,7 +72,7 @@
         <p>Kategori tidak ada</p>
     <?php } ?>
     <a href="data-category.php" class="box">
-            <img src="images/category-1.png" alt="">
+            <img src="images/category-2.png" alt="">
         <p>More Category</p>
 </section>
   <section class="about" id="about">

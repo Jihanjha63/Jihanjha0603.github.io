@@ -25,6 +25,7 @@ a {
 	box-sizing: border-box;
 }
 .box-login h2 {
+	color:#de2493;
 	text-align: center;
 	margin-bottom: 15px;
 }
